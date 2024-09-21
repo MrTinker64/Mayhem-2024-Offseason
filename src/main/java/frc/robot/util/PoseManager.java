@@ -27,19 +27,19 @@ public class PoseManager {
   private Twist2d robotVelocity = new Twist2d();
   private double lastYawVelocity = 0.0;
 
-
-
+// DifferentialDrivePoseEstimator​(DifferentialDriveKinematics kinematics, Rotation2d gyroAngle, double leftDistanceMeters, double rightDistanceMeters, Pose2d initialPoseMeters)
   private DifferentialDrivePoseEstimator poseEstimator =
       new DifferentialDrivePoseEstimator(
           DriveConstants.kinematics, lastGyroAngle, lastModulePositions, new Pose2d());
 
+  
+
   public PoseManager() {}
 
   public void addOdometryMeasurement(
-      Rotation2d gyroAngle, SwerveModulePosition[] modulePositions, double yawVelocity) {
-    lastModulePositions = modulePositions;
+      Rotation2d gyroAngle, double leftPositionMeters, double rightPositionMeters, double yawVelocity) {
     lastGyroAngle = gyroAngle;
-    poseEstimator.update(gyroAngle, modulePositions);
+    poseEstimator.update(gyroAngle, leftPositionMeters, rightPositionMeters);
     lastYawVelocity = yawVelocity;
   }
 
