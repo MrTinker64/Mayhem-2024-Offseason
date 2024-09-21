@@ -8,9 +8,9 @@ public interface DriveIO {
     public double motorAppliedVolts = 0.0;
     public double motorCurrentAmps = 0.0;
 
-    public double leftSpeed = 0.0;
-    public double rightSpeed = 0.0;
-  }
+        public double xSpeed = 0.0;
+        public double zRotation = 0.0;
+    }
 
   default void updateInputs(DriveIOInputs inputs) {}
 
