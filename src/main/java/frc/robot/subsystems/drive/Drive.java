@@ -26,7 +26,7 @@ public class Drive extends SubsystemBase {
     io.arcadeDrive(1.0, 0);
   }
 
-  public void driveCustom(double speed, double zRotation) {
+  public void arcadeDrive(double speed, double zRotation) {
     io.arcadeDrive(speed, zRotation);
   }
 
@@ -39,7 +39,7 @@ public class Drive extends SubsystemBase {
           }
 
           double omegaRotation = omegaRotationInput.get();
-          driveCustom(xSpeed, omegaRotation);
+          arcadeDrive(xSpeed, omegaRotation);
         })
         .withName("joystick drive");
   }
