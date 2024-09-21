@@ -20,7 +20,7 @@ public class DriveIOReal implements DriveIO{
         driveTrain.stopMotor();
     }
 
-    public void tankDrive(double leftSpeed, double rightSpeed) {
-        driveTrain.tankDrive(leftSpeed, rightSpeed);
+    public void arcadeDrive(double xSpeed, double zRotation) {
+        driveTrain.arcadeDrive(xSpeed, zRotation);
     }
 }

@@ -2,6 +2,8 @@ package frc.robot.subsystems.drive;
 
 import com.ctre.phoenix.Logger;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -24,16 +26,23 @@ public class Drive extends SubsystemBase{
     }
 
     public void driveForwardFullSpeed() {
-        io.tankDrive(1.0, 1.0);
+        io.arcadeDrive(1.0, 0);
     }
 
-    public void driveForwardCustomSpeed(double speed) {
-        io.tankDrive(speed, speed);
+    public void driveCustom(double speed, double zRotation) {
+        io.arcadeDrive(speed, zRotation);
     }
 
-    public void customDriveSpeeds(double leftSpeed, double rightSpeed) {
-        io.tankDrive(leftSpeed, rightSpeed);
-    }
+    public Command joystickDrive(Supplier<Double> xInput, Supplier<Double> omegaRotationInput) {
+        return run(() -> {
+            double xSpeed = xInput.get();
 
-    
+            if (xSpeed == 0) {
+                fullStop();
+            }
+
+            double omegaRotation = omegaRotationInput.get();
+            driveCustom(xSpeed, omegaRotation);
+        }).withName("joystick drive");
+    }
 }
