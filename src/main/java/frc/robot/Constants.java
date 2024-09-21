@@ -22,7 +22,9 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final Mode currentMode = Mode.REAL;
+  public static final double loopPeriodSecs = 0.02;
+  public static final Mode currentMode = Mode.SIM;
+  public static final boolean tuningMode = false;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -33,5 +35,13 @@ public final class Constants {
 
     /** Replaying from a log file. */
     REPLAY
+  }
+
+  /** Checks whether the correct robot is selected when deploying. */
+  public static void main(String... args) {
+    if (currentMode == Mode.SIM) {
+      System.err.println("Cannot deploy, invalid robot selected: " + currentMode);
+      System.exit(1);
+    }
   }
 }
