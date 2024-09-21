@@ -6,7 +6,6 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveIOReal implements DriveIO{
-    
 
     private final CANSparkMax rightMotor = new CANSparkMax(DriveConstants.rightMotorID, MotorType.kBrushed);
     private final CANSparkMax leftMotor = new CANSparkMax(DriveConstants.leftMotorID, MotorType.kBrushed);
@@ -21,7 +20,7 @@ public class DriveIOReal implements DriveIO{
         driveTrain.stopMotor();
     }
 
-    public void tankDrive(double rightSpeed, double leftSpeed) {
+    public void tankDrive(double leftSpeed, double rightSpeed) {
         driveTrain.tankDrive(leftSpeed, rightSpeed);
     }
 }
