@@ -3,19 +3,19 @@ package frc.robot.subsystems.drive;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface DriveIO {
-    @AutoLog
-    public static class DriveIOInputs {
-        public double motorAppliedVolts = 0.0;
-        public double motorCurrentAmps = 0.0;
+  @AutoLog
+  public static class DriveIOInputs {
+    public double motorAppliedVolts = 0.0;
+    public double motorCurrentAmps = 0.0;
 
-        public double leftSpeed = 0.0;
-        public double rightSpeed = 0.0;
-    }
+    public double leftSpeed = 0.0;
+    public double rightSpeed = 0.0;
+  }
 
-    default void updateInputs(DriveIOInputs inputs) {}
+  default void updateInputs(DriveIOInputs inputs) {}
 
-    // stop, run
-    default void motorStop() {}
+  // stop, run
+  default void motorStop() {}
 
-    default void motorRun(double inputVolts){} 
-} 
+  default void motorRun(double inputVolts) {}
+}
