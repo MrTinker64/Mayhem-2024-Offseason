@@ -2,13 +2,11 @@ package frc.robot.util;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.geometry.Twist2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -26,21 +24,29 @@ public class PoseManager {
   private Rotation2d lastGyroAngle = new Rotation2d();
   private Twist2d robotVelocity = new Twist2d();
   private double lastYawVelocity = 0.0;
+  private double lastLeftPosition = 0.0;
+  private double lastRightPosition = 0.0;
 
-// DifferentialDrivePoseEstimator​(DifferentialDriveKinematics kinematics, Rotation2d gyroAngle, double leftDistanceMeters, double rightDistanceMeters, Pose2d initialPoseMeters)
+  // DifferentialDrivePoseEstimator​(DifferentialDriveKinematics kinematics, Rotation2d gyroAngle,
+  // double leftDistanceMeters, double rightDistanceMeters, Pose2d initialPoseMeters)
   private DifferentialDrivePoseEstimator poseEstimator =
       new DifferentialDrivePoseEstimator(
-          DriveConstants.kinematics, lastGyroAngle, lastModulePositions, new Pose2d());
-
-  
+          DriveConstants.kinematics,
+          lastGyroAngle,
+          lastLeftPosition,
+          lastRightPosition,
+          new Pose2d());
 
   public PoseManager() {}
 
   public void addOdometryMeasurement(
-      Rotation2d gyroAngle, double leftPositionMeters, double rightPositionMeters, double yawVelocity) {
+      Rotation2d gyroAngle, double leftPosition, double rightPosition, double yawVelocity) {
     lastGyroAngle = gyroAngle;
-    poseEstimator.update(gyroAngle, leftPositionMeters, rightPositionMeters);
+    // might need to convert to distance
+    poseEstimator.update(gyroAngle, leftPosition, rightPosition);
     lastYawVelocity = yawVelocity;
+    lastLeftPosition = leftPosition;
+    lastRightPosition = rightPosition;
   }
 
   public void addVisionMeasurement(
@@ -109,7 +115,7 @@ public class PoseManager {
 
   /** Resets the current odometry pose. */
   public void setPose(Pose2d pose) {
-    poseEstimator.resetPosition(lastGyroAngle, lastModulePositions, pose);
+    poseEstimator.resetPosition(lastGyroAngle, lastLeftPosition, lastRightPosition, pose);
   }
 
   @AutoLogOutput(key = "Odometry/FieldVelocity")
