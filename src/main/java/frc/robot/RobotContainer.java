@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardChooser;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -40,14 +41,14 @@ public class RobotContainer {
   public boolean slowMode = false;
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+  private final LoggedShuffleboardChooser<Command> autoChooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
     // Set up auto routines
 
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    autoChooser = new LoggedShuffleboardChooser<>("Auto Choices", "Driver", AutoBuilder.buildAutoChooser());
 
     // Configure the button bindings
     configureButtonBindings();
