@@ -27,12 +27,11 @@ public class PoseManager {
   private Twist2d robotVelocity = new Twist2d();
   private double lastYawVelocity = 0.0;
 
-  // TODO: FAKE delete later
-  private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(5);
+
 
   private DifferentialDrivePoseEstimator poseEstimator =
       new DifferentialDrivePoseEstimator(
-          kinematics, lastGyroAngle, lastModulePositions, new Pose2d());
+          DriveConstants.kinematics, lastGyroAngle, lastModulePositions, new Pose2d());
 
   public PoseManager() {}
 
