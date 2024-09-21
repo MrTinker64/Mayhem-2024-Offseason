@@ -18,16 +18,16 @@ public class Drive extends SubsystemBase {
     // GeneralUtil.logSubsystem(this, "Shooter/Feeder");
   }
 
-  public void fullStop() {
+  private void fullStop() {
     io.stopDriveTrain();
   }
 
-  public void driveForwardFullSpeed() {
+  private void driveForwardFullSpeed() {
     io.arcadeDrive(1.0, 0);
   }
 
-  public void driveCustom(double speed, double zRotation) {
-    io.arcadeDrive(speed, zRotation);
+  private void arcadeDrive(double speed, double omegaRotation) {
+    io.arcadeDrive(speed, omegaRotation);
   }
 
   public Command joystickDrive(Supplier<Double> xInput, Supplier<Double> omegaRotationInput) {
@@ -39,7 +39,7 @@ public class Drive extends SubsystemBase {
           }
 
           double omegaRotation = omegaRotationInput.get();
-          driveCustom(xSpeed, omegaRotation);
+          arcadeDrive(xSpeed, omegaRotation);
         })
         .withName("joystick drive");
   }

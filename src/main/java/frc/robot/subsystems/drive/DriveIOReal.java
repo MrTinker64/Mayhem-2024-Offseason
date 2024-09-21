@@ -21,7 +21,7 @@ public class DriveIOReal implements DriveIO {
     driveTrain.stopMotor();
   }
 
-  public void arcadeDrive(double xSpeed, double zRotation) {
-    driveTrain.arcadeDrive(xSpeed, zRotation);
+  public void arcadeDrive(double xSpeed, double omegaRotation) {
+    driveTrain.arcadeDrive(xSpeed, omegaRotation);
   }
 }
