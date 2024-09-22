@@ -10,6 +10,9 @@ public interface DriveIO {
 
     public double xSpeed = 0.0;
     public double zRotation = 0.0;
+
+    public double leftPosition = 0.0;
+    public double rightPosition = 0.0;
   }
 
   default void updateInputs(DriveIOInputs inputs) {}

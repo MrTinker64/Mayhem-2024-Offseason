@@ -1,5 +1,7 @@
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.GeneralUtil;
@@ -14,6 +16,8 @@ public class Drive extends SubsystemBase {
   private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
 
+  Rotation2d rawGyroRotation = new Rotation2d();
+
 
   public Drive(DriveIOReal io, GyroIO gyroIO) {
     this.io = io;
@@ -25,6 +29,16 @@ public class Drive extends SubsystemBase {
     io.updateInputs(driveInputs);
     Logger.processInputs("Shooter/Feeder", driveInputs);
     GeneralUtil.logSubsystem(this, "Shooter/Feeder");
+
+    // Update gyro angle
+    if (gyroInputs.connected) {
+      // Use the real gyro angle
+      rawGyroRotation = gyroInputs.yawPosition;
+    } else {
+      // Use the angle delta from the kinematics and module deltas
+      Twist2d twist = DriveConstants.kinematics.toTwist2d(driveInputs.leftPosition, driveInputs.rightPosition);
+      rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
+    }
   }
 
   private void fullStop() {
