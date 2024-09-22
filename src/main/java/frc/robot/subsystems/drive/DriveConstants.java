@@ -8,5 +8,6 @@ public final class DriveConstants {
   public static final int leftMotorID = 0;
 
   // TODO: FAKE change trackwidth later
-  public static final DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(5);
+  public static final DifferentialDriveKinematics kinematics =
+      new DifferentialDriveKinematics(0.508);
 }
