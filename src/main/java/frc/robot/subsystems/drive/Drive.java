@@ -2,10 +2,13 @@ package frc.robot.subsystems.drive;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.GeneralUtil;
+
 import java.util.function.Supplier;
 
 public class Drive extends SubsystemBase {
   private final DriveIOReal io;
+  private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
 
   public Drive(DriveIOReal io) {
     this.io = io;
@@ -15,7 +18,7 @@ public class Drive extends SubsystemBase {
     // TODO: Logs
     // io.updateInputs(inputs);
     // Logger.processInputs("Shooter/Feeder", inputs);
-    // GeneralUtil.logSubsystem(this, "Shooter/Feeder");
+    GeneralUtil.logSubsystem(this, "Shooter/Feeder");
   }
 
   private void fullStop() {
