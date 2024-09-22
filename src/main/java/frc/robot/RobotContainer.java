@@ -17,6 +17,11 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.DriveIO;
+import frc.robot.subsystems.drive.DriveIOReal;
+import frc.robot.subsystems.drive.GyroIO;
+import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardChooser;
@@ -29,6 +34,7 @@ import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardChooser;
  */
 public class RobotContainer {
   // Subsystems
+  private final Drive drive;
 
   // Pose Manager
 
@@ -44,6 +50,36 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    switch (Constants.currentMode) {
+      case REAL:
+        // Real robot, instantiate hardware IO implementations
+        drive =
+            new Drive(
+                new DriveIOReal(), new GyroIOPigeon2());
+        break;
+
+      case SIM:
+        // Sim robot, instantiate physics sim IO implementations
+        drive =
+            new Drive(
+                new DriveIO() {
+                  
+                }, // Replace with sim once available
+                new GyroIO() {}
+                );
+        break;
+
+      default:
+        // Replayed robot, disable IO implementations
+        drive =
+            new Drive(
+                new DriveIO() {
+                  
+                },
+                new GyroIO() {}
+                );
+        break;
+    }
 
     // Set up auto routines
 
