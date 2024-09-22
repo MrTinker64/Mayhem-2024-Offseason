@@ -21,7 +21,6 @@ import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardChooser;
 
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -48,7 +47,8 @@ public class RobotContainer {
 
     // Set up auto routines
 
-    autoChooser = new LoggedShuffleboardChooser<>("Auto Choices", "Driver", AutoBuilder.buildAutoChooser());
+    autoChooser =
+        new LoggedShuffleboardChooser<>("Auto Choices", "Driver", AutoBuilder.buildAutoChooser());
 
     // Configure the button bindings
     configureButtonBindings();
