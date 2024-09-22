@@ -6,6 +6,8 @@ import frc.robot.util.GeneralUtil;
 
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 public class Drive extends SubsystemBase {
   private final DriveIOReal io;
   private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
@@ -15,9 +17,8 @@ public class Drive extends SubsystemBase {
   }
 
   public void periodic() {
-    // TODO: Logs
-    // io.updateInputs(inputs);
-    // Logger.processInputs("Shooter/Feeder", inputs);
+    io.updateInputs(driveInputs);
+    Logger.processInputs("Shooter/Feeder", driveInputs);
     GeneralUtil.logSubsystem(this, "Shooter/Feeder");
   }
 
