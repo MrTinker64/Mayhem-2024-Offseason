@@ -10,11 +10,16 @@ import org.littletonrobotics.junction.Logger;
 
 public class Drive extends SubsystemBase {
   private final DriveIOReal io;
+  private final GyroIO gyroIO;
   private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
+  private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
 
-  public Drive(DriveIOReal io) {
+
+  public Drive(DriveIOReal io, GyroIO gyroIO) {
     this.io = io;
+    this.gyroIO = gyroIO;
   }
+
 
   public void periodic() {
     io.updateInputs(driveInputs);
