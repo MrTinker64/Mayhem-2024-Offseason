@@ -5,9 +5,7 @@ import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.GeneralUtil;
-
 import java.util.function.Supplier;
-
 import org.littletonrobotics.junction.Logger;
 
 public class Drive extends SubsystemBase {
@@ -18,12 +16,10 @@ public class Drive extends SubsystemBase {
 
   Rotation2d rawGyroRotation = new Rotation2d();
 
-
   public Drive(DriveIO io, GyroIO gyroIO) {
     this.io = io;
     this.gyroIO = gyroIO;
   }
-
 
   public void periodic() {
     io.updateInputs(driveInputs);
@@ -36,7 +32,8 @@ public class Drive extends SubsystemBase {
       rawGyroRotation = gyroInputs.yawPosition;
     } else {
       // Use the angle delta from the kinematics and module deltas
-      Twist2d twist = DriveConstants.kinematics.toTwist2d(driveInputs.leftPosition, driveInputs.rightPosition);
+      Twist2d twist =
+          DriveConstants.kinematics.toTwist2d(driveInputs.leftPosition, driveInputs.rightPosition);
       rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
     }
   }

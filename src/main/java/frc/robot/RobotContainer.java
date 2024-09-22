@@ -53,31 +53,21 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        drive =
-            new Drive(
-                new DriveIOReal(), new GyroIOPigeon2());
+        drive = new Drive(new DriveIOReal(), new GyroIOPigeon2());
         break;
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
         drive =
             new Drive(
-                new DriveIO() {
-                  
-                }, // Replace with sim once available
-                new GyroIO() {}
-                );
+                new DriveIO() {}, // Replace with sim once available
+                new GyroIO() {});
         break;
 
       default:
         // Replayed robot, disable IO implementations
-        drive =
-            new Drive(
-                new DriveIO() {
-                  
-                },
-                new GyroIO() {}
-                );
+        drive = new Drive(new DriveIO() {}, new GyroIO() {});
+
         break;
     }
 
