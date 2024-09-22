@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.Supplier;
 
 public class Drive extends SubsystemBase {
-  private final DriveIOReal io;
+  private final DriveIO io;
 
-  public Drive(DriveIOReal io) {
+  public Drive(DriveIO io) {
     this.io = io;
   }
 

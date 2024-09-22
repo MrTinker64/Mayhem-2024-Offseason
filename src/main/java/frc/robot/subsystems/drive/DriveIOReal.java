@@ -13,14 +13,18 @@ public class DriveIOReal implements DriveIO {
 
   private DifferentialDrive driveTrain = new DifferentialDrive(leftMotor, rightMotor);
 
+  @Override
   public void updateInputs(DriveIOInputs inputs) {
-    // TODO: Figure out if we will have encoders
+    // TODO: we will have encoders
+
   }
 
+  @Override
   public void stopDriveTrain() {
     driveTrain.stopMotor();
   }
 
+  @Override
   public void arcadeDrive(double xSpeed, double omegaRotation) {
     driveTrain.arcadeDrive(xSpeed, omegaRotation);
   }
