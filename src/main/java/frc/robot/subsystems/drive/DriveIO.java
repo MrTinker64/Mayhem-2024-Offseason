@@ -8,9 +8,6 @@ public interface DriveIO {
     public double motorAppliedVolts = 0.0;
     public double motorCurrentAmps = 0.0;
 
-    public double xSpeed = 0.0;
-    public double zRotation = 0.0;
-
     public double leftPosition = 0.0;
     public double rightPosition = 0.0;
   }

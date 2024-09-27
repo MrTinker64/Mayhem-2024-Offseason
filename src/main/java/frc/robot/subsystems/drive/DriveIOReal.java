@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drive;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -10,13 +11,16 @@ public class DriveIOReal implements DriveIO {
       new CANSparkMax(DriveConstants.rightMotorID, MotorType.kBrushed);
   private final CANSparkMax leftMotor =
       new CANSparkMax(DriveConstants.leftMotorID, MotorType.kBrushed);
+  // 0 is placeholder deviceID
+  private final CANcoder leftEncoder = new CANcoder(0);
+  private final CANcoder rightEncoder = new CANcoder(0);
 
   private DifferentialDrive driveTrain = new DifferentialDrive(leftMotor, rightMotor);
 
   @Override
   public void updateInputs(DriveIOInputs inputs) {
-    // TODO: we will have encoders
-
+    inputs.leftPosition = leftEncoder.getPosition().getValueAsDouble();
+    inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
   }
 
   @Override
