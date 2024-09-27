@@ -24,6 +24,7 @@ import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
+import frc.robot.util.PoseManager;
 import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardChooser;
 
 /**
@@ -37,6 +38,7 @@ public class RobotContainer {
   private final Drive drive;
 
   // Pose Manager
+  private final PoseManager poseManager = new PoseManager();
 
   // Controller
   private final CommandXboxController driver = new CommandXboxController(0);
@@ -53,7 +55,7 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
-        drive = new Drive(new DriveIOReal(), new GyroIOPigeon2());
+        drive = new Drive(new DriveIOReal(), new GyroIOPigeon2(), poseManager);
         break;
 
       case SIM:
@@ -61,12 +63,13 @@ public class RobotContainer {
         drive =
             new Drive(
                 new DriveIO() {}, // Replace with sim once available
-                new GyroIO() {});
+                new GyroIO() {}, 
+                poseManager);
         break;
 
       default:
         // Replayed robot, disable IO implementations
-        drive = new Drive(new DriveIO() {}, new GyroIO() {});
+        drive = new Drive(new DriveIO() {}, new GyroIO() {}, poseManager);
 
         break;
     }

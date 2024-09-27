@@ -5,6 +5,8 @@ import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.GeneralUtil;
+import frc.robot.util.PoseManager;
+
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
@@ -13,12 +15,14 @@ public class Drive extends SubsystemBase {
   private final GyroIO gyroIO;
   private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
+  private PoseManager poseManager;
 
   Rotation2d rawGyroRotation = new Rotation2d();
 
-  public Drive(DriveIO io, GyroIO gyroIO) {
+  public Drive(DriveIO io, GyroIO gyroIO, PoseManager poseManager) {
     this.io = io;
     this.gyroIO = gyroIO;
+    this.poseManager = poseManager;
   }
 
   public void periodic() {
@@ -36,6 +40,14 @@ public class Drive extends SubsystemBase {
           DriveConstants.kinematics.toTwist2d(driveInputs.leftPosition, driveInputs.rightPosition);
       rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
     }
+
+    // Add odometry measurement
+    poseManager.addOdometryMeasurement(
+      rawGyroRotation, 
+      driveInputs.leftPosition, 
+      driveInputs.rightPosition, 
+      gyroInputs.yawVelocityRadPerSec
+    );
   }
 
   private void fullStop() {
