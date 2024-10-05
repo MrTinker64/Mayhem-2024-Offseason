@@ -1,9 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.Volts;
-
-
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -34,7 +30,31 @@ public class DriveIOSim implements DriveIO {
           // l and r position: 0.005 m
           VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
 
-  @Override
+ 
+  private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
+
+  private final PIDController m_leftPIDController = new PIDController(8.5, 0, 0);
+  private final PIDController m_rightPIDController = new PIDController(8.5, 0, 0);
+
+  private static final double kTrackWidth = 0.381 * 2;
+
+  private final PWMSparkMax m_leftLeader = new PWMSparkMax(1);
+  private final PWMSparkMax m_leftFollower = new PWMSparkMax(2);
+  private final PWMSparkMax m_rightLeader = new PWMSparkMax(3);
+  private final PWMSparkMax m_rightFollower = new PWMSparkMax(4);
+
+  private final DifferentialDriveKinematics m_kinematics =
+      new DifferentialDriveKinematics(kTrackWidth);
+
+  private final Encoder m_leftEncoder = new Encoder(0, 1);
+  private final Encoder m_rightEncoder = new Encoder(2, 3);
+
+  public DriveIOSim() {
+    m_leftLeader.addFollower(m_leftFollower);
+    m_rightLeader.addFollower(m_rightFollower);
+  }
+
+   @Override
   public void updateInputs(DriveIOInputs inputs) {
     // TODO: we will have encoders
 
@@ -45,49 +65,24 @@ public class DriveIOSim implements DriveIO {
     driveTrain.setInputs(0, 0);
   }
 
-  private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
-
-    private final PIDController m_leftPIDController = new PIDController(8.5, 0, 0);
-    private final PIDController m_rightPIDController = new PIDController(8.5, 0, 0);
-
-    private static final double kTrackWidth = 0.381 * 2;
-
-    private final PWMSparkMax m_leftLeader = new PWMSparkMax(1);
-    private final PWMSparkMax m_leftFollower = new PWMSparkMax(2);
-    private final PWMSparkMax m_rightLeader = new PWMSparkMax(3);
-    private final PWMSparkMax m_rightFollower = new PWMSparkMax(4);
-
-    private final DifferentialDriveKinematics m_kinematics =
-        new DifferentialDriveKinematics(kTrackWidth);
-
-    private final Encoder m_leftEncoder = new Encoder(0, 1);
-    private final Encoder m_rightEncoder = new Encoder(2, 3);
-
-  public DriveIOSim() {
-    m_leftLeader.addFollower(m_leftFollower);
-    m_rightLeader.addFollower(m_rightFollower);
-  }
 
   @Override
   public void arcadeDrive(double xSpeed, double omegaRotation) {
 
     setSpeeds(m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0, omegaRotation)));
-
-    
   }
 
   /** Sets speeds to the drivetrain motors. */
-    private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-        final double leftFeedforward =
-            m_feedforward.calculate(MetersPerSecond.of(speeds.leftMetersPerSecond)).in(Volts);
-        final double rightFeedforward =
-            m_feedforward.calculate(MetersPerSecond.of(speeds.rightMetersPerSecond)).in(Volts);
-        double leftOutput =
-            m_leftPIDController.calculate(m_leftEncoder.getRate(), speeds.leftMetersPerSecond);
-        double rightOutput =
-            m_rightPIDController.calculate(m_rightEncoder.getRate(), speeds.rightMetersPerSecond);
+  // TODO there is a unit's conflict here
+  private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
+    final double leftFeedforward = m_feedforward.calculate(speeds.leftMetersPerSecond);
+    final double rightFeedforward = m_feedforward.calculate(speeds.rightMetersPerSecond);
+    double leftOutput =
+        m_leftPIDController.calculate(m_leftEncoder.getRate(), speeds.leftMetersPerSecond);
+    double rightOutput =
+        m_rightPIDController.calculate(m_rightEncoder.getRate(), speeds.rightMetersPerSecond);
 
-        m_leftLeader.setVoltage(leftOutput + leftFeedforward);
-        m_rightLeader.setVoltage(rightOutput + rightFeedforward);
-    }
+    m_leftLeader.setVoltage(leftOutput + leftFeedforward);
+    m_rightLeader.setVoltage(rightOutput + rightFeedforward);
+  }
 }

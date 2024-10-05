@@ -63,7 +63,7 @@ public class RobotContainer {
         drive =
             new Drive(
                 new DriveIO() {}, // Replace with sim once available
-                new GyroIO() {}, 
+                new GyroIO() {},
                 poseManager);
         break;
 
