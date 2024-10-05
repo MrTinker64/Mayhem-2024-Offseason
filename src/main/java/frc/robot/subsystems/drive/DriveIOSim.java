@@ -1,5 +1,8 @@
 package frc.robot.subsystems.drive;
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Volts;
+
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -53,7 +56,6 @@ public class DriveIOSim implements DriveIO {
     m_leftLeader.addFollower(m_leftFollower);
     m_rightLeader.addFollower(m_rightFollower);
   }
-
    @Override
   public void updateInputs(DriveIOInputs inputs) {
     // TODO: we will have encoders
@@ -73,10 +75,12 @@ public class DriveIOSim implements DriveIO {
   }
 
   /** Sets speeds to the drivetrain motors. */
-  // TODO there is a unit's conflict here
+  //TODO there is a unit's conflict
   private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    final double leftFeedforward = m_feedforward.calculate(speeds.leftMetersPerSecond);
-    final double rightFeedforward = m_feedforward.calculate(speeds.rightMetersPerSecond);
+    final double leftFeedforward =
+        m_feedforward.calculate(MetersPerSecond.of(speeds.leftMetersPerSecond)).in(Volts);
+    final double rightFeedforward =
+        m_feedforward.calculate(MetersPerSecond.of(speeds.rightMetersPerSecond)).in(Volts);
     double leftOutput =
         m_leftPIDController.calculate(m_leftEncoder.getRate(), speeds.leftMetersPerSecond);
     double rightOutput =
