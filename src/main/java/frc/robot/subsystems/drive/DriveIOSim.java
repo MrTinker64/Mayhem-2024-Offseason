@@ -33,7 +33,6 @@ public class DriveIOSim implements DriveIO {
           // l and r position: 0.005 m
           VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
 
- 
   private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
 
   private final PIDController m_leftPIDController = new PIDController(8.5, 0, 0);
@@ -56,7 +55,8 @@ public class DriveIOSim implements DriveIO {
     m_leftLeader.addFollower(m_leftFollower);
     m_rightLeader.addFollower(m_rightFollower);
   }
-   @Override
+
+  @Override
   public void updateInputs(DriveIOInputs inputs) {
     // TODO: we will have encoders
 
@@ -67,7 +67,6 @@ public class DriveIOSim implements DriveIO {
     driveTrain.setInputs(0, 0);
   }
 
-
   @Override
   public void arcadeDrive(double xSpeed, double omegaRotation) {
 
@@ -75,7 +74,7 @@ public class DriveIOSim implements DriveIO {
   }
 
   /** Sets speeds to the drivetrain motors. */
-  //TODO there is a unit's conflict
+  // TODO there is a unit's conflict
   private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
     final double leftFeedforward =
         m_feedforward.calculate(MetersPerSecond.of(speeds.leftMetersPerSecond)).in(Volts);
