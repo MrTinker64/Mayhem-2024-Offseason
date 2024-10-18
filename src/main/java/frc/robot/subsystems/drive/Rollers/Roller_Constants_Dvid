@@ -5,7 +5,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 public final class DriveConstants {
     public static final int rightMotorID = 0;
      // TODO: Update Ids to 1
-     
+     public static final double flywheel_Full_Speed = 6;
     public static final int leftMotorID = 1;
 
 }

@@ -4,7 +4,7 @@ import org.littletonrobotics.junction.AutoLog;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 
-public interface rollerIO{
+public interface RollerIO{
     @AutoLog
 
 
@@ -18,7 +18,8 @@ public interface rollerIO{
 
      public default void handle_Input(Rolle_IO_Inputs roller_Inputs){ }
 
-     public default void run_The_Motor(double speed_In_Volts){}
+     public default void run_L_Motor(double speed_In_Volts){}
+     public default void run_R_Motor(double speed_In_Volts){}
 
      public default void stop_Motor(){}
 } 

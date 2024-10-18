@@ -8,7 +8,7 @@ import com.revrobotics.ReletiveEncoder;
 
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default; 
 
-public class DriveIOReal implements DriveIO {
+public class RollerIOReal implements DriveIO {
 // decalre motors
 private final CANSparkMax rightMotor =
       new CANSparkMax(Roller_Constants_Dvid.rightMotorID, MotorType.kBrushless );
@@ -25,12 +25,16 @@ private final CANSparkMax leftMotor =
         roller_Inputs.l_Applied_Volts = leftMotor.getAppliedOutput() * leftMotor.GetBusVoltage();
        } 
        @Override
-         public default void run_The_Motor(double speed_In_Volts){
-            rightMotor.runMotor(speed_In_Volts);
+         public default void run_L_Motor(double speed_In_Volts){
+     
             leftMotor.runMotor(speed_In_Volts);
-         }
+         }   
+         @Override   
+         public default void run_R_Motor(double speed_In_Volts){
+            rightMotor.runMotor(speed_In_Volts);
+         } 
          @Override
-         public default void stop_Motor(double speed_In_Volts){
+         public default void stop_Motor(){
             rightMotor.stopMotor();
             leftMotor.stopMotor();
          }
