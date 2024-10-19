@@ -1,92 +1,49 @@
+// Copyright 2021-2024 FRC 6328
+// http://github.com/Mechanical-Advantage
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// version 3 as published by the Free Software Foundation or
+// available in the root directory of this project.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.MetersPerSecond;
-import static edu.wpi.first.units.Units.Volts;
-
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotGearing;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSize;
 
 public class DriveIOSim implements DriveIO {
+  private DifferentialDrivetrainSim sim =
+      DifferentialDrivetrainSim.createKitbotSim(
+          KitbotMotor.kDualCIMPerSide, KitbotGearing.k10p71, KitbotWheelSize.kSixInch, null);
 
-  private DifferentialDrivetrainSim driveTrain =
-      new DifferentialDrivetrainSim(
-          DCMotor.getNEO(2), // 2 NEO motors on each side of the drivetrain.
-          7.29, // 7.29:1 gearing reduction.
-          7.5, // MOI of 7.5 kg m^2 (from CAD model).
-          60.0, // The mass of the robot is 60 kg.
-          Units.inchesToMeters(3), // The robot uses 3" radius wheels.
-          0.7112, // The track width is 0.7112 meters.
-
-          // The standard deviations for measurement noise:
-          // x and y:          0.001 m
-          // heading:          0.001 rad
-          // l and r velocity: 0.1   m/s
-          // l and r position: 0.005 m
-          VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
-
- 
-  private final SimpleMotorFeedforward m_feedforward = new SimpleMotorFeedforward(1, 3);
-
-  private final PIDController m_leftPIDController = new PIDController(8.5, 0, 0);
-  private final PIDController m_rightPIDController = new PIDController(8.5, 0, 0);
-
-  private static final double kTrackWidth = 0.381 * 2;
-
-  private final PWMSparkMax m_leftLeader = new PWMSparkMax(1);
-  private final PWMSparkMax m_leftFollower = new PWMSparkMax(2);
-  private final PWMSparkMax m_rightLeader = new PWMSparkMax(3);
-  private final PWMSparkMax m_rightFollower = new PWMSparkMax(4);
-
-  private final DifferentialDriveKinematics m_kinematics =
-      new DifferentialDriveKinematics(kTrackWidth);
-
-  private final Encoder m_leftEncoder = new Encoder(0, 1);
-  private final Encoder m_rightEncoder = new Encoder(2, 3);
-
-  public DriveIOSim() {
-    m_leftLeader.addFollower(m_leftFollower);
-    m_rightLeader.addFollower(m_rightFollower);
-  }
-   @Override
-  public void updateInputs(DriveIOInputs inputs) {
-    // TODO: we will have encoders
-
-  }
+  private double leftAppliedVolts = 0.0;
+  private double rightAppliedVolts = 0.0;
 
   @Override
-  public void stopDriveTrain() {
-    driveTrain.setInputs(0, 0);
+  public void updateInputs(DriveIOInputs inputs) {
+    sim.update(0.02);
+    inputs.leftPosition = sim.getLeftPositionMeters() / DriveConstants.WHEEL_RADIUS;
+    inputs.rightPosition = sim.getRightPositionMeters() / DriveConstants.WHEEL_RADIUS;
+    inputs.leftCurrentAmps = sim.getLeftCurrentDrawAmps();
+    inputs.rightCurrentAmps = sim.getRightCurrentDrawAmps();
+    inputs.leftAppliedVolts = leftAppliedVolts;
+    inputs.rightAppliedVolts = rightAppliedVolts;
   }
-
 
   @Override
   public void arcadeDrive(double xSpeed, double omegaRotation) {
-
-    setSpeeds(m_kinematics.toWheelSpeeds(new ChassisSpeeds(xSpeed, 0, omegaRotation)));
-  }
-
-  /** Sets speeds to the drivetrain motors. */
-  //TODO there is a unit's conflict
-  private void setSpeeds(DifferentialDriveWheelSpeeds speeds) {
-    final double leftFeedforward =
-        m_feedforward.calculate(MetersPerSecond.of(speeds.leftMetersPerSecond)).in(Volts);
-    final double rightFeedforward =
-        m_feedforward.calculate(MetersPerSecond.of(speeds.rightMetersPerSecond)).in(Volts);
-    double leftOutput =
-        m_leftPIDController.calculate(m_leftEncoder.getRate(), speeds.leftMetersPerSecond);
-    double rightOutput =
-        m_rightPIDController.calculate(m_rightEncoder.getRate(), speeds.rightMetersPerSecond);
-
-    m_leftLeader.setVoltage(leftOutput + leftFeedforward);
-    m_rightLeader.setVoltage(rightOutput + rightFeedforward);
+    var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, omegaRotation, true);
+    leftAppliedVolts = MathUtil.clamp(speeds.left * 12.0, -12.0, 12.0);
+    rightAppliedVolts = MathUtil.clamp(speeds.right * 12.0, -12.0, 12.0);
+    sim.setInputs(leftAppliedVolts, rightAppliedVolts);
   }
 }
