@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 
 public class RollerIOReal implements DriveIO {
 // decalre motors
+private int 
 private final CANSparkMax rightMotor =
       new CANSparkMax(Roller_Constants_Dvid.rightMotorID, MotorType.kBrushless );
       private final CANcoder rightEncoder = new CANcoder(0);
@@ -17,11 +18,17 @@ private final CANSparkMax leftMotor =
       new CANSparkMax(Roller_Constants_Dvid.rightMotorID, MotorType.kBrushless );
       private final CANcoder leftEncoder = new CANcoder(1);
  
+
+   
       @Override
       public void handle_Input(Rolle_IO_Inputs roller_Inputs){
+
         roller_Inputs.r_Rot_Speed = rightEncoder.getVelocity();
+
         roller_Inputs.l_Rot_Speed = leftEncoder.getVelocity();
+
         roller_Inputs.r_Applied_Volts = rightMotor.getAppliedOutput() * rightMotor.GetBusVoltage();
+
         roller_Inputs.l_Applied_Volts = leftMotor.getAppliedOutput() * leftMotor.GetBusVoltage();
        } 
        @Override
