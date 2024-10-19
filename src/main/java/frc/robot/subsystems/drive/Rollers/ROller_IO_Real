@@ -1,0 +1,52 @@
+package frc.robot.subsystems.drive;
+package frc.robot.subsystems.Roller_Constants_Dvid;
+import org.littletonrobotics.junction.AutoLog;
+
+import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.ReletiveEncoder;
+
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default; 
+
+public class RollerIOReal implements DriveIO {
+// decalre motors
+private int 
+private final CANSparkMax rightMotor =
+      new CANSparkMax(Roller_Constants_Dvid.rightMotorID, MotorType.kBrushless );
+      private final CANcoder rightEncoder = new CANcoder(0);
+private final CANSparkMax leftMotor =
+      new CANSparkMax(Roller_Constants_Dvid.rightMotorID, MotorType.kBrushless );
+      private final CANcoder leftEncoder = new CANcoder(1);
+ 
+
+   
+      @Override
+      public void handle_Input(Rolle_IO_Inputs roller_Inputs){
+
+        roller_Inputs.r_Rot_Speed = rightEncoder.getVelocity();
+
+        roller_Inputs.l_Rot_Speed = leftEncoder.getVelocity();
+
+        roller_Inputs.r_Applied_Volts = rightMotor.getAppliedOutput() * rightMotor.GetBusVoltage();
+
+        roller_Inputs.l_Applied_Volts = leftMotor.getAppliedOutput() * leftMotor.GetBusVoltage();
+       } 
+       @Override
+         public default void run_L_Motor(double speed_In_Volts){
+     
+            leftMotor.runMotor(speed_In_Volts);
+         }   
+         @Override   
+         public default void run_R_Motor(double speed_In_Volts){
+            rightMotor.runMotor(speed_In_Volts);
+         } 
+         @Override
+         public default void stop_Motor(){
+            rightMotor.stopMotor();
+            leftMotor.stopMotor();
+         }
+
+
+
+
+}

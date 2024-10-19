@@ -8,6 +8,8 @@ import frc.robot.util.GeneralUtil;
 import frc.robot.util.PoseManager;
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
+import frc.robot.util.loggedShuffleboardClasses.*;
+import frc.robot.util.loggedShuffleboardClasses.DriveIOInputsAutoLogged;
 
 public class Drive extends SubsystemBase {
   private final DriveIO io;
