@@ -22,6 +22,8 @@ import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOReal;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
+import frc.robot.subsystems.drive.rollers.RollerIO;
+import frc.robot.subsystems.drive.rollers.Rollers;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.AlertType;
 import frc.robot.util.PoseManager;
@@ -36,10 +38,10 @@ import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
-
+  public CommandXboxController controller;
   // Pose Manager
   private final PoseManager poseManager = new PoseManager();
-
+private Rollers rollerIO;
   // Controller
   private final CommandXboxController driver = new CommandXboxController(0);
 
@@ -94,6 +96,10 @@ public class RobotContainer {
 
     // Driver controls
 
+    controller.x().whileTrue(rollerIO.run_Flywheel_Full_Speed());
+      controller.y().whileTrue(rollerIO.run_Flywheel_Half_Speed());
+    controller.a().whileTrue(rollerIO.run_Flywheel_x_Speed(5, 4));
+    controller.b().onTrue(rollerIO.Stop_Fly_Wheels());
   }
 
   /** Updates the alerts for disconnected controllers. */
