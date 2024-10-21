@@ -31,6 +31,7 @@ public class Robot extends LoggedRobot {
   private static final String defaultAuto = "Default";
   private static final String customAuto = "My Auto";
   private String autoSelected;
+  private RobotContainer robotContainer;
   private final LoggedDashboardChooser<String> chooser =
       new LoggedDashboardChooser<>("Auto Choices");
 
@@ -82,6 +83,7 @@ public class Robot extends LoggedRobot {
 
     // See http://bit.ly/3YIzFZ6 for more information on timestamps in AdvantageKit.
     // Logger.disableDeterministicTimestamps()
+    robotContainer = new RobotContainer();
 
     // Start AdvantageKit logger
     Logger.start();

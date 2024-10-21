@@ -13,7 +13,6 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -76,8 +75,8 @@ public class RobotContainer {
 
     // Set up auto routines
 
-    autoChooser =
-        new LoggedShuffleboardChooser<>("Auto Choices", "Driver", AutoBuilder.buildAutoChooser());
+    autoChooser = new LoggedShuffleboardChooser<>("Auto Choices", "Driver");
+    // new LoggedShuffleboardChooser<>("Auto Choices", "Driver", AutoBuilder.buildAutoChooser());
 
     // Configure the button bindings
     configureButtonBindings();
