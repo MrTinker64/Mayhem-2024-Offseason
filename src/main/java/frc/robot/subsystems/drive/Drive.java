@@ -26,10 +26,6 @@ public class Drive extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // debugging stuff
-    System.out.println("hello!");
-    Logger.recordOutput("Hello!", 0);
-
     io.updateInputs(driveInputs);
     Logger.processInputs("Shooter/Feeder", driveInputs);
     GeneralUtil.logSubsystem(this, "Shooter/Feeder");
