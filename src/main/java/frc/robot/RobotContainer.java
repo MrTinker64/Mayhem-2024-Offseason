@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.DriveIO;
 import frc.robot.subsystems.drive.DriveIOReal;
+import frc.robot.subsystems.drive.DriveIOSim;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.util.Alert;
@@ -59,11 +60,7 @@ public class RobotContainer {
 
       case SIM:
         // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new DriveIO() {}, // Replace with sim once available
-                new GyroIO() {},
-                poseManager);
+        drive = new Drive(new DriveIOSim(), new GyroIO() {}, poseManager);
         break;
 
       default:
