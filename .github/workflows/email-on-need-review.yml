@@ -1,12 +1,13 @@
 name: Send Email on Need Review Issue
 
-on:
-  project_card:
-    types: [moved]
+# on:
+#   project_card:
+#     types: [moved]
+on: workflow_dispatch
 
 jobs:
   CINotify_Email:
-    if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
+    # if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
     runs-on: ubuntu-latest
 
     steps:
