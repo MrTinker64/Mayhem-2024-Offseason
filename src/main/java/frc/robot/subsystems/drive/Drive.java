@@ -54,9 +54,9 @@ public class Drive extends SubsystemBase {
         gyroInputs.yawVelocityRadPerSec);
   }
 
-  private void fullStop() {
-    io.stopDriveTrain();
-  }
+  // private void fullStop() {
+  //   io.stopDriveTrain();
+  // }
 
   private void arcadeDrive(double speed, double omegaRotation) {
     io.arcadeDrive(speed, omegaRotation);
@@ -65,11 +65,6 @@ public class Drive extends SubsystemBase {
   public Command joystickDrive(Supplier<Double> xInput, Supplier<Double> omegaRotationInput) {
     return run(() -> {
           double xSpeed = xInput.get();
-
-          if (xSpeed == 0) {
-            fullStop();
-          }
-
           double omegaRotation = MathUtil.applyDeadband(omegaRotationInput.get(), DEADBAND);
           arcadeDrive(xSpeed, omegaRotation);
         })
