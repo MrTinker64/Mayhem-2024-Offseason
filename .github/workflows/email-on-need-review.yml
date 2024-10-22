@@ -49,7 +49,7 @@ jobs:
               "content": [
                 {
                   "type": "text/plain",
-                  "value": "An issue has been moved into the 'Needs Review' column.\n\nIssue Title: title\nIssue URL: https://github.com/SFUnity/Mayhem-2024-Offseason/edit/MrTinker64-patch-1/.github/workflows/email-on-need-review.yml"
+                  "value": "An issue has been moved into the '\''Needs Review'\'' column.\n\nIssue Title: title\nIssue URL: https://github.com/SFUnity/Mayhem-2024-Offseason/edit/MrTinker64-patch-1/.github/workflows/email-on-need-review.yml"
                 }
               ]
             }'
