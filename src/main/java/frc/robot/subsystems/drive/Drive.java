@@ -56,10 +56,6 @@ public class Drive extends SubsystemBase {
     io.stopDriveTrain();
   }
 
-  private void driveForwardFullSpeed() {
-    io.arcadeDrive(1.0, 0);
-  }
-
   private void arcadeDrive(double speed, double omegaRotation) {
     io.arcadeDrive(speed, omegaRotation);
   }
