@@ -1,0 +1,40 @@
+name: Send Email on Need Review Issue
+
+on:
+  project_card:
+    types: [moved]
+
+jobs:
+  send_email:
+    if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Need Review'"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Email Notification
+        env:
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        run: |
+          curl -X POST https://api.sendgrid.com/v3/mail/send \
+            -H "Authorization: Bearer $SENDGRID_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "personalizations": [
+                {
+                  "to": [
+                    {
+                      "email": "avi.micah@gmail.com"
+                    }
+                  ],
+                  "subject": "Issue Needs Review"
+                }
+              ],
+              "from": {
+                "email": "noreply@github-actions.com"
+              },
+              "content": [
+                {
+                  "type": "text/plain",
+                  "value": "An issue has been moved into the 'Need Review' column.\n\nIssue Title: ${{ github.event.project_card.content.title }}\nIssue URL: ${{ github.event.project_card.content_url }}"
+                }
+              ]
+            }'
