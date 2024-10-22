@@ -41,7 +41,7 @@ public class Drive extends SubsystemBase {
       // Use the angle delta from the kinematics and module deltas
       Twist2d twist =
           DriveConstants.kinematics.toTwist2d(driveInputs.leftPosition, driveInputs.rightPosition);
-      rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
+      rawGyroRotation = new Rotation2d(twist.dtheta);
     }
 
     // Add odometry measurement
