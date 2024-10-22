@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,7 @@ public class Drive extends SubsystemBase {
   private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private PoseManager poseManager;
+  private static final double DEADBAND = 0.05;
 
   Rotation2d rawGyroRotation = new Rotation2d();
 
@@ -68,7 +70,7 @@ public class Drive extends SubsystemBase {
             fullStop();
           }
 
-          double omegaRotation = omegaRotationInput.get();
+          double omegaRotation = MathUtil.applyDeadband(omegaRotationInput.get(), DEADBAND);
           arcadeDrive(xSpeed, omegaRotation);
         })
         .withName("joystick drive");
