@@ -1,24 +1,10 @@
 name: Send Email on Need Review Issue
 
-# on:
-#   project_card:
-#     types: [moved]
-on: workflow_dispatch
+on:
+  project_card:
+    types: [moved]
 
 jobs:
-  # CINotify_Email:
-  #   if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - uses: cinotify/github-action@v1.6.0
-  #     with:
-  #       # Recipient email address
-  #       to: avi.micah@gmail.com
-  #       # Email subject
-  #       subject: asd
-  #       # Email body
-  #       body: asd
   GPT_send_email:
     # if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
     runs-on: ubuntu-latest
