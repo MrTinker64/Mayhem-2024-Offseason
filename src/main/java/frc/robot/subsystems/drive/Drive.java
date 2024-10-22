@@ -26,9 +26,12 @@ public class Drive extends SubsystemBase {
 
   @Override
   public void periodic() {
+    gyroIO.updateInputs(gyroInputs);
+    Logger.processInputs("Drive/Gyro", gyroInputs);
+
     io.updateInputs(driveInputs);
-    Logger.processInputs("Shooter/Feeder", driveInputs);
-    GeneralUtil.logSubsystem(this, "Shooter/Feeder");
+    Logger.processInputs("Drive/Inputs", driveInputs);
+    GeneralUtil.logSubsystem(this, "Drive/Inputs");
 
     // Update gyro angle
     if (gyroInputs.connected) {

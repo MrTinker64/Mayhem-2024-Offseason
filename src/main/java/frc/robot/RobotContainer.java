@@ -86,7 +86,8 @@ public class RobotContainer {
   /** Use this method to define your button->command mappings. */
   private void configureButtonBindings() {
     // Default cmds
-    drive.setDefaultCommand(drive.joystickDrive(() -> driver.getLeftY(), () -> driver.getRightX()));
+    drive.setDefaultCommand(
+        drive.joystickDrive(() -> driver.getLeftY(), () -> -driver.getRightX()));
 
     // Driver controls
 
