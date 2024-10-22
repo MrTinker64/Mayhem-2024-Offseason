@@ -22,7 +22,7 @@ jobs:
   GPT_send_email:
     # if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
     runs-on: ubuntu-latest
-
+    # "value": "An issue has been moved into the 'Needs Review' column.\n\nIssue Title: ${{ github.event.project_card.content.title }}\nIssue URL: ${{ github.event.project_card.content_url }}"
     steps:
       - name: Send Email Notification
         env:
@@ -49,7 +49,7 @@ jobs:
               "content": [
                 {
                   "type": "text/plain",
-                  "value": "An issue has been moved into the 'Needs Review' column.\n\nIssue Title: ${{ github.event.project_card.content.title }}\nIssue URL: ${{ github.event.project_card.content_url }}"
+                  "value": "An issue has been moved into the 'Needs Review' column.\n\nIssue Title: title\nIssue URL: https://github.com/SFUnity/Mayhem-2024-Offseason/edit/MrTinker64-patch-1/.github/workflows/email-on-need-review.yml"
                 }
               ]
             }'
