@@ -5,37 +5,50 @@ on:
     types: [moved]
 
 jobs:
-  send_email:
+  CINotify_Email:
     if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send Email Notification
-        env:
-          SENDGRID_API_KEY: '${{ secrets.SENDGRID_API_KEY }}'
-        run: |
-          curl --request POST \
-            --url https://api.sendgrid.com/v3/mail/send \
-            --header "Authorization: Bearer $SENDGRID_API_KEY" \
-            --header 'Content-Type: application/json' \
-            -data '{
-              "personalizations": [
-                {
-                  "to": [
-                    {
-                      "email": "avi.micah@gmail.com"
-                    }
-                  ],
-                  "subject": "Issue Needs Review"
-                }
-              ],
-              "from": {
-                "email": "noreply@github-actions.com"
-              },
-              "content": [
-                {
-                  "type": "text/plain",
-                  "value": "An issue has been moved into the 'Needs Review' column.\n\nIssue Title: ${{ github.event.project_card.content.title }}\nIssue URL: ${{ github.event.project_card.content_url }}"
-                }
-              ]
-            }'
+    - uses: cinotify/github-action@v1.6.0
+      with:
+        # Recipient email address
+        to: avi.micah@gmail.com
+        # Email subject
+        subject: asd
+        # Email body
+        body: asd
+  # GPT_send_email:
+  #   if: "github.event_name == 'project_card' && github.event.project_card.column_name == 'Needs Review'"
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Send Email Notification
+  #       env:
+  #         SENDGRID_API_KEY: '${{ secrets.SENDGRID_API_KEY }}'
+  #       run: |
+  #         curl --request POST \
+  #           --url https://api.sendgrid.com/v3/mail/send \
+  #           --header "Authorization: Bearer $SENDGRID_API_KEY" \
+  #           --header 'Content-Type: application/json' \
+  #           -data '{
+  #             "personalizations": [
+  #               {
+  #                 "to": [
+  #                   {
+  #                     "email": "avi.micah@gmail.com"
+  #                   }
+  #                 ],
+  #                 "subject": "Issue Needs Review"
+  #               }
+  #             ],
+  #             "from": {
+  #               "email": "noreply@github-actions.com"
+  #             },
+  #             "content": [
+  #               {
+  #                 "type": "text/plain",
+  #                 "value": "An issue has been moved into the 'Needs Review' column.\n\nIssue Title: ${{ github.event.project_card.content.title }}\nIssue URL: ${{ github.event.project_card.content_url }}"
+  #               }
+  #             ]
+  #           }'
