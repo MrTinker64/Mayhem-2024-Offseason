@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Send Email Notification
         env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          SENDGRID_API_KEY: '${{ secrets.SENDGRID_API_KEY }}'
         run: |
           curl --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
