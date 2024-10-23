@@ -1,8 +1,8 @@
 name: Send Email on Need Review Issue
 
-on: workflow_dispatch
-  # project_card:
-  #   types: [moved]
+on:
+  project_card:
+    types: [moved]
 
 jobs:
   GPT_send_email:
@@ -35,7 +35,7 @@ jobs:
               "content": [
                 {
                   "type": "text/plain",
-                  "value": "An issue has been moved into the '\''Needs Review'\'' column.\n\nIssue Title: title\nIssue URL: https://github.com/SFUnity/Mayhem-2024-Offseason/edit/MrTinker64-patch-1/.github/workflows/email-on-need-review.yml"
+                  "value": "An issue has been moved into the '\''Needs Review'\'' column.\n\nIssue Title: title\nIssue URL: https://github.com/SFUnity/Mayhem-2024-Offseason"
                 }
               ]
             }'
