@@ -54,10 +54,6 @@ public class Drive extends SubsystemBase {
         gyroInputs.yawVelocityRadPerSec);
   }
 
-  // private void fullStop() {
-  //   io.stopDriveTrain();
-  // }
-
   private void arcadeDrive(double speed, double omegaRotation) {
     io.arcadeDrive(speed, omegaRotation);
   }

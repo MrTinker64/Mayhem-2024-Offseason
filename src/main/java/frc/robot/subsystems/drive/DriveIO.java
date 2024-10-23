@@ -15,6 +15,5 @@ public interface DriveIO {
   }
 
   default void updateInputs(DriveIOInputs inputs) {}
-  // default void stopDriveTrain() {}
   default void arcadeDrive(double xSpeed, double omegaRotation) {}
 }

@@ -23,14 +23,9 @@ public class DriveIOReal implements DriveIO {
     inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
   }
 
-  // @Override
-  // public void stopDriveTrain() {
-  //   driveTrain.stopMotor();
-  // }
-
   @Override
   public void arcadeDrive(double xSpeed, double omegaRotation) {
-    if (xSpeed==0 && omegaRotation==0) {
+    if (xSpeed == 0 && omegaRotation == 0) {
       driveTrain.stopMotor();
     } else {
       driveTrain.arcadeDrive(xSpeed, omegaRotation);
