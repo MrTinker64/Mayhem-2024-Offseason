@@ -1,8 +1,8 @@
 name: Send Email on Need Review Issue
 
-on:
-  project_card:
-    types: [moved]
+on: workflow_dispatch
+  # project_card:
+  #   types: [moved]
 
 jobs:
   GPT_send_email:
