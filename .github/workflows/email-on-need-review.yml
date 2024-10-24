@@ -1,7 +1,8 @@
 name: Send Email on Need Review Issue
 
 on:
-  issues: [edited]
+  issues:
+    types: [edited]
 
 jobs:
   GPT_send_email:
