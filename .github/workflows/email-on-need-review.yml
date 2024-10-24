@@ -1,7 +1,7 @@
 name: Send Email on Need Review Issue
 
 on:
-  project_card:
+  issues:
     types: [moved]
 
 jobs:
