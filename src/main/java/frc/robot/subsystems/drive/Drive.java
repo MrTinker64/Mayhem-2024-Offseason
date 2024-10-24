@@ -54,15 +54,11 @@ public class Drive extends SubsystemBase {
         gyroInputs.yawVelocityRadPerSec);
   }
 
-  private void arcadeDrive(double speed, double omegaRotation) {
-    io.arcadeDrive(speed, omegaRotation);
-  }
-
   public Command joystickDrive(Supplier<Double> xInput, Supplier<Double> omegaRotationInput) {
     return run(() -> {
-          double xSpeed = xInput.get();
+          double xSpeed = MathUtil.applyDeadband(xInput.get(), DEADBAND);
           double omegaRotation = MathUtil.applyDeadband(omegaRotationInput.get(), DEADBAND);
-          arcadeDrive(xSpeed, omegaRotation);
+          io.arcadeDrive(xSpeed, omegaRotation);
         })
         .withName("joystick drive");
   }
