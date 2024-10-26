@@ -24,6 +24,8 @@ public class DriveIOReal implements DriveIO {
 
     inputs.leftAppliedVolts = leftMotor.getAppliedOutput()*12;
     inputs.rightAppliedVolts = rightMotor.getAppliedOutput()*12;
+    inputs.leftCurrentAmps = leftMotor.getOutputCurrent();
+    inputs.rightCurrentAmps = rightMotor.getOutputCurrent();
   }
 
   @Override
