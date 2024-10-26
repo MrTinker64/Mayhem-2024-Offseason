@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveIOReal implements DriveIO {
 
+  private final CANSparkMax leftMotor =
+  new CANSparkMax(DriveConstants.leftMotorID, MotorType.kBrushed);
   private final CANSparkMax rightMotor =
       new CANSparkMax(DriveConstants.rightMotorID, MotorType.kBrushed);
-  private final CANSparkMax leftMotor =
-      new CANSparkMax(DriveConstants.leftMotorID, MotorType.kBrushed);
   // 0 is placeholder deviceID
   private final CANcoder leftEncoder = new CANcoder(0);
   private final CANcoder rightEncoder = new CANcoder(0);
@@ -21,6 +21,8 @@ public class DriveIOReal implements DriveIO {
   public void updateInputs(DriveIOInputs inputs) {
     inputs.leftPosition = leftEncoder.getPosition().getValueAsDouble();
     inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
+
+    inputs.leftAppliedVolts = ;
   }
 
   @Override
