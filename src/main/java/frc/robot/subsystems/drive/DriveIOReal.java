@@ -22,7 +22,8 @@ public class DriveIOReal implements DriveIO {
     inputs.leftPosition = leftEncoder.getPosition().getValueAsDouble();
     inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
 
-    inputs.leftAppliedVolts = ;
+    inputs.leftAppliedVolts = leftMotor.getAppliedOutput()*12;
+    inputs.rightAppliedVolts = rightMotor.getAppliedOutput()*12;
   }
 
   @Override
