@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.59,
+        "y": 3.729931640783178
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.5900000000000002,
+        "y": 2.4670756793249056
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.098419859252312,
+        "y": 2.623962929928345
+      },
+      "prevControl": {
+        "x": 0.7683766317023171,
+        "y": 2.657898350931721
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "The actual end of perimiter"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
