@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Start To Perimiter (Higher)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Perimiter To Back Of Cube (higher)"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "back of cube to home (higher)"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
