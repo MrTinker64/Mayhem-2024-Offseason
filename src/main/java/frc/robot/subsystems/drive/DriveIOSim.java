@@ -14,6 +14,7 @@
 package frc.robot.subsystems.drive;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotGearing;
@@ -31,8 +32,8 @@ public class DriveIOSim implements DriveIO {
   @Override
   public void updateInputs(DriveIOInputs inputs) {
     sim.update(0.02);
-    inputs.leftPosition = sim.getLeftPositionMeters() / DriveConstants.WHEEL_RADIUS;
-    inputs.rightPosition = sim.getRightPositionMeters() / DriveConstants.WHEEL_RADIUS;
+    inputs.leftPosition = Units.radiansToRotations(sim.getLeftPositionMeters() / DriveConstants.WHEEL_RADIUS);
+    inputs.rightPosition = Units.radiansToRotations(sim.getRightPositionMeters() / DriveConstants.WHEEL_RADIUS);
     inputs.leftVelocity = sim.getLeftVelocityMetersPerSecond() / DriveConstants.WHEEL_RADIUS;
     inputs.rightVelocity = sim.getLeftVelocityMetersPerSecond() / DriveConstants.WHEEL_RADIUS;
 
