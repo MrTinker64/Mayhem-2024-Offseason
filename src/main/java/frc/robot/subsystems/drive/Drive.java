@@ -62,4 +62,10 @@ public class Drive extends SubsystemBase {
         })
         .withName("joystick drive");
   }
+
+  /** Returns the measured speeds of the robot in the robot's frame of reference. */
+  @AutoLogOutput(key = "Drive/MeasuredSpeeds")
+  private ChassisSpeeds getSpeeds() {
+    return DriveConstants.kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(driveInputs.leftVelocity, driveInputs.rightVelocity));
+  }
 }
