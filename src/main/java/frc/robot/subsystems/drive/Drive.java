@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drive;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,7 @@ public class Drive extends SubsystemBase {
   private final DriveIOInputsAutoLogged driveInputs = new DriveIOInputsAutoLogged();
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private PoseManager poseManager;
+  private static final double DEADBAND = 0.05;
 
   Rotation2d rawGyroRotation = new Rotation2d();
 
@@ -24,10 +26,14 @@ public class Drive extends SubsystemBase {
     this.poseManager = poseManager;
   }
 
+  @Override
   public void periodic() {
+    gyroIO.updateInputs(gyroInputs);
+    Logger.processInputs("Drive/Gyro", gyroInputs);
+
     io.updateInputs(driveInputs);
-    Logger.processInputs("Shooter/Feeder", driveInputs);
-    GeneralUtil.logSubsystem(this, "Shooter/Feeder");
+    Logger.processInputs("Drive/Inputs", driveInputs);
+    GeneralUtil.logSubsystem(this, "Drive/Inputs");
 
     // Update gyro angle
     if (gyroInputs.connected) {
@@ -37,7 +43,7 @@ public class Drive extends SubsystemBase {
       // Use the angle delta from the kinematics and module deltas
       Twist2d twist =
           DriveConstants.kinematics.toTwist2d(driveInputs.leftPosition, driveInputs.rightPosition);
-      rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
+      rawGyroRotation = new Rotation2d(twist.dtheta);
     }
 
     // Add odometry measurement
@@ -48,29 +54,18 @@ public class Drive extends SubsystemBase {
         gyroInputs.yawVelocityRadPerSec);
   }
 
-  private void fullStop() {
-    io.stopDriveTrain();
-  }
-
-  private void driveForwardFullSpeed() {
-    io.arcadeDrive(1.0, 0);
-  }
-
-  private void arcadeDrive(double speed, double omegaRotation) {
-    io.arcadeDrive(speed, omegaRotation);
-  }
-
   public Command joystickDrive(Supplier<Double> xInput, Supplier<Double> omegaRotationInput) {
     return run(() -> {
-          double xSpeed = xInput.get();
-
-          if (xSpeed == 0) {
-            fullStop();
-          }
-
-          double omegaRotation = omegaRotationInput.get();
-          arcadeDrive(xSpeed, omegaRotation);
+          double xSpeed = MathUtil.applyDeadband(xInput.get(), DEADBAND);
+          double omegaRotation = MathUtil.applyDeadband(omegaRotationInput.get(), DEADBAND);
+          io.arcadeDrive(xSpeed, omegaRotation);
         })
         .withName("joystick drive");
+  }
+
+  /** Returns the measured speeds of the robot in the robot's frame of reference. */
+  @AutoLogOutput(key = "Drive/MeasuredSpeeds")
+  private ChassisSpeeds getSpeeds() {
+    return DriveConstants.kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(driveInputs.leftVelocity, driveInputs.rightVelocity));
   }
 }

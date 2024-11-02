@@ -7,6 +7,8 @@ public final class DriveConstants {
   public static final int rightMotorID = 0;
   public static final int leftMotorID = 0;
 
+  public static final int WHEEL_RADIUS = 3; //  wheel radius is 3 inches
+
   // TODO: FAKE change trackwidth later
   public static final DifferentialDriveKinematics kinematics =
       new DifferentialDriveKinematics(0.508);
