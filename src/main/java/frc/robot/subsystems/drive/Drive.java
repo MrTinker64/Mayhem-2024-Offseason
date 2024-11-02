@@ -68,4 +68,17 @@ public class Drive extends SubsystemBase {
   private ChassisSpeeds getSpeeds() {
     return DriveConstants.kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(driveInputs.leftVelocity, driveInputs.rightVelocity));
   }
+
+  public void driveVelocity(double leftMetersPerSec, double rightMetersPerSec) {
+    Logger.recordOutput("Drive/LeftVelocitySetpointMetersPerSec", leftMetersPerSec);
+    Logger.recordOutput("Drive/RightVelocitySetpointMetersPerSec", rightMetersPerSec);
+    double leftRadPerSec = leftMetersPerSec / DriveConstants.WHEEL_RADIUS;
+    double rightRadPerSec = rightMetersPerSec / DriveConstants.WHEEL_RADIUS;
+    // TODO: implement io.setVelocity
+    // io.setVelocity(
+    //     leftRadPerSec,
+    //     rightRadPerSec,
+    //     feedforward.calculate(leftRadPerSec),
+    //     feedforward.calculate(rightRadPerSec));
+  }
 }
