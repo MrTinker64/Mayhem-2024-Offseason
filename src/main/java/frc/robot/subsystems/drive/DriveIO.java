@@ -7,7 +7,9 @@ public interface DriveIO {
   public static class DriveIOInputs {
     public double leftPosition = 0.0;
     public double rightPosition = 0.0;
-
+    public double leftVelocity = 0.0;
+    public double rightVelovity = 0.0;
+    
     public double leftAppliedVolts = 0.0;
     public double rightAppliedVolts = 0.0;
     public double leftCurrentAmps = 0.0;
