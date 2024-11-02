@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.0101584695536956,
-        "y": 3.2381415598446335
+        "x": 3.611309782679119,
+        "y": 3.0264638374215638
       },
       "prevControl": {
-        "x": 1.4939930123586482,
-        "y": 3.2381415598446335
+        "x": 2.061248319625267,
+        "y": 3.0264638374215638
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "The actual end of perimiter"
+      "linkedName": "perimeter try2 higher"
     }
   ],
   "rotationTargets": [],
