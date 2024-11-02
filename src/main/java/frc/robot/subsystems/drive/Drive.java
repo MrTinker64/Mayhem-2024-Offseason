@@ -24,6 +24,22 @@ public class Drive extends SubsystemBase {
     this.io = io;
     this.gyroIO = gyroIO;
     this.poseManager = poseManager;
+
+    AutoBuilder.configureRamsete(
+        () -> poseManager.getPose(),
+        (pose) -> {
+          poseManager.setPose(pose);
+        },
+        () -> getSpeeds(), 
+        (speeds) -> {
+          var wheelSpeeds = DriveConstants.kinematics.toWheelSpeeds(speeds);
+          driveVelocity(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
+        },
+        DEADBAND,
+        DEADBAND,
+        null,
+        null,
+        null);
   }
 
   @Override
