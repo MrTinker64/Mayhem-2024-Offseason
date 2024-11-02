@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class DriveIOReal implements DriveIO {
 
   private final CANSparkMax leftMotor =
-  new CANSparkMax(DriveConstants.leftMotorID, MotorType.kBrushed);
+      new CANSparkMax(DriveConstants.leftMotorID, MotorType.kBrushed);
   private final CANSparkMax rightMotor =
       new CANSparkMax(DriveConstants.rightMotorID, MotorType.kBrushed);
   // 0 is placeholder deviceID
@@ -21,9 +21,11 @@ public class DriveIOReal implements DriveIO {
   public void updateInputs(DriveIOInputs inputs) {
     inputs.leftPosition = leftEncoder.getPosition().getValueAsDouble();
     inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
+    inputs.leftVelocity = leftEncoder.getVelocity().getValueAsDouble();
+    inputs.rightVelocity = rightEncoder.getVelocity().getValueAsDouble();
 
-    inputs.leftAppliedVolts = leftMotor.getAppliedOutput()*12;
-    inputs.rightAppliedVolts = rightMotor.getAppliedOutput()*12;
+    inputs.leftAppliedVolts = leftMotor.getAppliedOutput() * 12;
+    inputs.rightAppliedVolts = rightMotor.getAppliedOutput() * 12;
     inputs.leftCurrentAmps = leftMotor.getOutputCurrent();
     inputs.rightCurrentAmps = rightMotor.getOutputCurrent();
   }
