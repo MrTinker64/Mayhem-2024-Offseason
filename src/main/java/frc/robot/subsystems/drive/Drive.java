@@ -67,7 +67,7 @@ public class Drive extends SubsystemBase {
 
     io.updateInputs(driveInputs);
     Logger.processInputs("Drive/Inputs", driveInputs);
-    GeneralUtil.logSubsystem(this, "Drive/Inputs");
+    GeneralUtil.logSubsystem(this, "Drive");
 
     // Update gyro angle
     if (gyroInputs.connected) {
