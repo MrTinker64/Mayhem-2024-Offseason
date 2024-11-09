@@ -67,7 +67,6 @@ public class RobotContainer {
       default:
         // Replayed robot, disable IO implementations
         drive = new Drive(new DriveIO() {}, new GyroIO() {}, poseManager);
-
         break;
     }
 
@@ -108,6 +107,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    System.out.println("got auto" + autoChooser.get().getName());
     return autoChooser.get();
   }
 }

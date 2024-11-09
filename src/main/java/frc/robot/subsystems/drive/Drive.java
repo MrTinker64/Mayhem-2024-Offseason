@@ -4,6 +4,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Twist2d;
@@ -28,6 +29,8 @@ public class Drive extends SubsystemBase {
   private static final double DEADBAND = 0.05;
 
   Rotation2d rawGyroRotation = new Rotation2d();
+
+ public SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
 
   public Drive(DriveIO io, GyroIO gyroIO, PoseManager poseManager) {
     this.io = io;
@@ -109,11 +112,17 @@ public class Drive extends SubsystemBase {
     Logger.recordOutput("Drive/RightVelocitySetpointMetersPerSec", rightMetersPerSec);
     double leftRadPerSec = leftMetersPerSec / DriveConstants.WHEEL_RADIUS;
     double rightRadPerSec = rightMetersPerSec / DriveConstants.WHEEL_RADIUS;
-    // TODO: implement io.setVelocity
-    // io.setVelocity(
-    //     leftRadPerSec,
-    //     rightRadPerSec,
-    //     feedforward.calculate(leftRadPerSec),
-    //     feedforward.calculate(rightRadPerSec));
+
+    //TODO:pass in parameters
+   // setVelocity();
+    
   }
+  public void setVelocity(double leftSpeedMetersPerSecond, double rightSpeedMetersPerSecond) {
+    // Calculate the voltage needed for each side
+    double leftFeedforward = feedforward.calculate(leftSpeedMetersPerSecond);
+    double rightFeedforward = feedforward.calculate(rightSpeedMetersPerSecond);
+
+    // Set the motor voltages with feedforward applied
+  io.differentialDrive(leftFeedforward, rightFeedforward);
+}
 }
