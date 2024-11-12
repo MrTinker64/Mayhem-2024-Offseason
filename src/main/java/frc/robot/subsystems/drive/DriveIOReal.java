@@ -38,8 +38,9 @@ public class DriveIOReal implements DriveIO {
       driveTrain.arcadeDrive(xSpeed, omegaRotation);
     }
   }
-  @Override 
-  public void differentialDrive(double leftSpeed, double rightSpeed){
+
+  @Override
+  public void differentialDrive(double leftSpeed, double rightSpeed) {
     driveTrain.tankDrive(leftSpeed, rightSpeed);
   }
 }

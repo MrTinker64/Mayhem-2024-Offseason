@@ -30,7 +30,8 @@ public class Drive extends SubsystemBase {
 
   Rotation2d rawGyroRotation = new Rotation2d();
 
- public SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
+  public SimpleMotorFeedforward feedforward =
+      new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
 
   public Drive(DriveIO io, GyroIO gyroIO, PoseManager poseManager) {
     this.io = io;
@@ -113,16 +114,17 @@ public class Drive extends SubsystemBase {
     double leftRadPerSec = leftMetersPerSec / DriveConstants.WHEEL_RADIUS;
     double rightRadPerSec = rightMetersPerSec / DriveConstants.WHEEL_RADIUS;
 
-    //TODO:pass in parameters
-   // setVelocity();
-    
+    // TODO:pass in parameters
+    // setVelocity();
+
   }
+
   public void setVelocity(double leftSpeedMetersPerSecond, double rightSpeedMetersPerSecond) {
     // Calculate the voltage needed for each side
     double leftFeedforward = feedforward.calculate(leftSpeedMetersPerSecond);
     double rightFeedforward = feedforward.calculate(rightSpeedMetersPerSecond);
 
     // Set the motor voltages with feedforward applied
-  io.differentialDrive(leftFeedforward, rightFeedforward);
-}
+    io.differentialDrive(leftFeedforward, rightFeedforward);
+  }
 }

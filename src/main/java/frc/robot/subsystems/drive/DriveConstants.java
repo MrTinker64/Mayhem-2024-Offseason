@@ -1,6 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class DriveConstants {
@@ -14,11 +13,8 @@ public final class DriveConstants {
   public static final DifferentialDriveKinematics kinematics =
       new DifferentialDriveKinematics(0.508);
 
-
-      //TODO: Tune THese
-    public static final double kS = 0;
-     public static final double kV = 0;
-      public static final double kA = 0;
-
-    
+  // TODO: Tune THese
+  public static final double kS = 0;
+  public static final double kV = 0;
+  public static final double kA = 0;
 }
