@@ -4,8 +4,10 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class DriveConstants {
   // TODO: Change these ids
-  public static final int rightMotorID = 0;
-  public static final int leftMotorID = 0;
+  public static final int rightMotorID = 1;
+  public static final int rightMotor2ID = 2;
+  public static final int leftMotorID = 3;
+  public static final int leftMotor2ID = 4;
 
   public static final int WHEEL_RADIUS = 3; //  wheel radius is 3 inches
 
