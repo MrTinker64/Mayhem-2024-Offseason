@@ -12,10 +12,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.GeneralUtil;
 import frc.robot.util.PoseManager;
+import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardNumber;
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
@@ -29,6 +31,10 @@ public class Drive extends SubsystemBase {
   private static final double DEADBAND = 0.05;
 
   Rotation2d rawGyroRotation = new Rotation2d();
+
+  private Timer autoTimer = new Timer();
+  private LoggedShuffleboardNumber autoDuration =
+      new LoggedShuffleboardNumber("autoDuration", "Driver", 5);
 
   public SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
@@ -126,5 +132,15 @@ public class Drive extends SubsystemBase {
 
     // Set the motor voltages with feedforward applied
     io.differentialDrive(leftFeedforward, rightFeedforward);
+  }
+
+  public Command auto() {
+    return runEnd(() -> io.arcadeDrive(0.5, 0), () -> autoTimer.stop())
+        .until(() -> autoTimer.get() >= autoDuration.get())
+        .beforeStarting(
+            () -> {
+              autoTimer.restart();
+              autoTimer.start();
+            });
   }
 }
