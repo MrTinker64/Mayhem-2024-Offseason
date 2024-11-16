@@ -1,6 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface DriveIO {
@@ -16,8 +15,8 @@ public interface DriveIO {
     public double leftCurrentAmps = 0.0;
     public double rightCurrentAmps = 0.0;
 
-    SimpleMotorFeedforward feedforward =
-        new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
+    // SimpleMotorFeedforward feedforward =
+    // new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
   }
 
   default void updateInputs(DriveIOInputs inputs) {}
