@@ -17,8 +17,8 @@ public class DriveIOReal implements DriveIO {
   private final CANSparkMax rightMotor2 =
       new CANSparkMax(DriveConstants.rightMotor2ID, MotorType.kBrushed);
   //  0 is placeholder deviceID
-  private final CANcoder leftEncoder = new CANcoder(0);
-  private final CANcoder rightEncoder = new CANcoder(0);
+  // private final CANcoder leftEncoder = new CANcoder(0);
+  // private final CANcoder rightEncoder = new CANcoder(0);
 
   private DifferentialDrive driveTrain = new DifferentialDrive(leftMotor, rightMotor);
 
@@ -37,11 +37,11 @@ public class DriveIOReal implements DriveIO {
   @Override
   public void updateInputs(DriveIOInputs inputs) {
 
-    inputs.leftPosition = leftEncoder.getPosition().getValueAsDouble();
+    // inputs.leftPosition = leftEncoder.getPosition().getValueAsDouble();
 
-    inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
-    inputs.leftVelocity = leftEncoder.getVelocity().getValueAsDouble();
-    inputs.rightVelocity = rightEncoder.getVelocity().getValueAsDouble();
+    // inputs.rightPosition = rightEncoder.getPosition().getValueAsDouble();
+    // inputs.leftVelocity = leftEncoder.getVelocity().getValueAsDouble();
+    // inputs.rightVelocity = rightEncoder.getVelocity().getValueAsDouble();
 
     inputs.leftAppliedVolts = leftMotor.getAppliedOutput() * 12;
     inputs.leftAppliedVolts2 = leftMotor2.getAppliedOutput() * 12;
