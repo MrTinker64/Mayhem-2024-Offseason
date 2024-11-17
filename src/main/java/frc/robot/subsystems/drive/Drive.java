@@ -34,7 +34,7 @@ public class Drive extends SubsystemBase {
 
   private Timer autoTimer = new Timer();
   private LoggedShuffleboardNumber autoDuration =
-      new LoggedShuffleboardNumber("autoDuration", "Driver", 5);
+      new LoggedShuffleboardNumber("autoDuration", "Driver", 1.5);
 
   public SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
@@ -135,7 +135,7 @@ public class Drive extends SubsystemBase {
   }
 
   public Command auto() {
-    return runEnd(() -> io.arcadeDrive(0.5, 0), () -> autoTimer.stop())
+    return runEnd(() -> io.arcadeDrive(0.25, 0), () -> autoTimer.stop())
         .until(() -> autoTimer.get() >= autoDuration.get())
         .beforeStarting(
             () -> {
