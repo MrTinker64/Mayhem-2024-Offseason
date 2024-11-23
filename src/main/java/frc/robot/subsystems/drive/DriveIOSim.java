@@ -30,7 +30,8 @@ public class DriveIOSim implements DriveIO {
   private double leftAppliedVolts = 0.0;
   private double rightAppliedVolts = 0.0;
 
-  public LoggedShuffleboardNumber speedsMultiplier = new LoggedShuffleboardNumber(null, null, leftAppliedVolts);
+  public LoggedShuffleboardNumber speedsMultiplier =
+      new LoggedShuffleboardNumber("Speeds multiplier", "Driver", leftAppliedVolts);
 
   @Override
   public void updateInputs(DriveIOInputs inputs) {
