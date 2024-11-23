@@ -34,7 +34,7 @@ public class Drive extends SubsystemBase {
 
   private Timer autoTimer = new Timer();
   private LoggedShuffleboardNumber autoDuration =
-      new LoggedShuffleboardNumber("autoDuration", "Driver", 1.5);
+      new LoggedShuffleboardNumber("autoDuration", "Driver", 1.8);
 
   public SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
@@ -139,7 +139,7 @@ public class Drive extends SubsystemBase {
   public Command auto() {
     double volts = 3;
     return runEnd(() -> io.voltageDrive(volts, volts), () -> autoTimer.stop())
-        .until(() -> autoTimer.get() >= autoDuration.get(() -> true))
+        .until(() -> autoTimer.get() >= autoDuration.get())
         .beforeStarting(
             () -> {
               autoTimer.restart();
