@@ -138,7 +138,7 @@ public class Drive extends SubsystemBase {
 
   public Command auto() {
     return runEnd(() -> io.arcadeDrive(0.25, 0), () -> autoTimer.stop())
-        .until(() -> autoTimer.get() >= autoDuration.get())
+        .until(() -> autoTimer.get() >= autoDuration.get(() -> true))
         .beforeStarting(
             () -> {
               autoTimer.restart();

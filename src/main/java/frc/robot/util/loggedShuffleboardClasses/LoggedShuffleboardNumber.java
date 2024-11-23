@@ -4,6 +4,9 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import frc.robot.Constants;
+
+import java.util.function.BooleanSupplier;
+
 import org.littletonrobotics.junction.LogTable;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
@@ -58,6 +61,14 @@ public class LoggedShuffleboardNumber
   /** Returns the current value. */
   public double get() {
     return Constants.tuningMode ? value : defaultValue;
+  }
+
+  public double get(BooleanSupplier ignoreTuningMode) {
+    if (ignoreTuningMode.getAsBoolean()) {
+      return value;
+    } else {
+      return get();
+    }
   }
 
   public void periodic() {
