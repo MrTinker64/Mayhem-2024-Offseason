@@ -137,7 +137,8 @@ public class Drive extends SubsystemBase {
   }
 
   public Command auto() {
-    return runEnd(() -> io.arcadeDrive(0.25, 0), () -> autoTimer.stop())
+    double volts = 3;
+    return runEnd(() -> io.voltageDrive(volts, volts), () -> autoTimer.stop())
         .until(() -> autoTimer.get() >= autoDuration.get(() -> true))
         .beforeStarting(
             () -> {
