@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotGearing;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotMotor;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSize;
+import frc.robot.util.loggedShuffleboardClasses.LoggedShuffleboardNumber;
 
 public class DriveIOSim implements DriveIO {
   private DifferentialDrivetrainSim sim =
@@ -28,6 +29,8 @@ public class DriveIOSim implements DriveIO {
 
   private double leftAppliedVolts = 0.0;
   private double rightAppliedVolts = 0.0;
+
+  public LoggedShuffleboardNumber speedsMultiplier = new LoggedShuffleboardNumber(null, null, leftAppliedVolts);
 
   @Override
   public void updateInputs(DriveIOInputs inputs) {
@@ -48,8 +51,10 @@ public class DriveIOSim implements DriveIO {
   @Override
   public void arcadeDrive(double xSpeed, double omegaRotation) {
     var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, omegaRotation, true);
-    leftAppliedVolts = MathUtil.clamp(speeds.left * 12.0, -12.0, 12.0);
-    rightAppliedVolts = MathUtil.clamp(speeds.right * 12.0, -12.0, 12.0);
+    // leftAppliedVolts = MathUtil.clamp(speeds.left * 12.0, -12.0, 12.0);
+    // rightAppliedVolts = MathUtil.clamp(speeds.right * 12.0, -12.0, 12.0);
+    leftAppliedVolts = speeds.left * speedsMultiplier;
+    rightAppliedVolts = speeds.right * speedsMultiplier;
     sim.setInputs(leftAppliedVolts, rightAppliedVolts);
   }
 }
