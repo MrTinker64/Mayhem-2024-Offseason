@@ -13,7 +13,6 @@
 
 package frc.robot.subsystems.drive;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
@@ -54,8 +53,8 @@ public class DriveIOSim implements DriveIO {
     var speeds = DifferentialDrive.arcadeDriveIK(xSpeed, omegaRotation, true);
     // leftAppliedVolts = MathUtil.clamp(speeds.left * 12.0, -12.0, 12.0);
     // rightAppliedVolts = MathUtil.clamp(speeds.right * 12.0, -12.0, 12.0);
-    leftAppliedVolts = speeds.left * speedsMultiplier;
-    rightAppliedVolts = speeds.right * speedsMultiplier;
+    leftAppliedVolts = speeds.left * speedsMultiplier.get();
+    rightAppliedVolts = speeds.right * speedsMultiplier.get();
     sim.setInputs(leftAppliedVolts, rightAppliedVolts);
   }
 }
