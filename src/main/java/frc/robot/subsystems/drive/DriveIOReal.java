@@ -62,6 +62,12 @@ public class DriveIOReal implements DriveIO {
   }
 
   @Override
+  public void voltageDrive(double leftVolts, double rightVolts) {
+    leftMotor.setVoltage(leftVolts);
+    rightMotor.setVoltage(rightVolts);
+  }
+
+  @Override
   public void differentialDrive(double leftSpeed, double rightSpeed) {
     driveTrain.tankDrive(leftSpeed, rightSpeed);
   }

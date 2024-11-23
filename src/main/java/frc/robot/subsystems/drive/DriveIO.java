@@ -27,9 +27,9 @@ public interface DriveIO {
 
   default void arcadeDrive(double xSpeed, double omegaRotation) {}
 
+  default void voltageDrive(double leftVolts, double rightVolts) {}
+
   default void setVelocity() {}
-  ;
 
   default void differentialDrive(double leftSpeed, double rightSpeed) {}
-  ;
 }
