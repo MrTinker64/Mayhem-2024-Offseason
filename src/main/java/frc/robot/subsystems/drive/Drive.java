@@ -33,8 +33,9 @@ public class Drive extends SubsystemBase {
   Rotation2d rawGyroRotation = new Rotation2d();
 
   private Timer autoTimer = new Timer();
-  private LoggedShuffleboardNumber autoDuration =
-      new LoggedShuffleboardNumber("autoDuration", "Driver", 1.8);
+  private LoggedShuffleboardNumber forwardDuration =
+      new LoggedShuffleboardNumber("forward", "Test", 2.85);
+  private LoggedShuffleboardNumber backDuration = new LoggedShuffleboardNumber("back", "Test", .55);
 
   public SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
@@ -139,11 +140,31 @@ public class Drive extends SubsystemBase {
   public Command auto() {
     double volts = 3;
     return runEnd(() -> io.voltageDrive(volts, volts), () -> autoTimer.stop())
-        .until(() -> autoTimer.get() >= autoDuration.get())
+        .until(() -> autoTimer.get() >= 1.7)
         .beforeStarting(
             () -> {
               autoTimer.restart();
               autoTimer.start();
             });
+  }
+
+  public Command autoWithCube() {
+    Command pushBack =
+        runEnd(() -> io.voltageDrive(-3, -3), () -> autoTimer.stop())
+            .until(() -> autoTimer.get() >= backDuration.get(() -> true))
+            .beforeStarting(
+                () -> {
+                  autoTimer.restart();
+                  autoTimer.start();
+                });
+    Command goForwards =
+        runEnd(() -> io.voltageDrive(3, 3), () -> autoTimer.stop())
+            .until(() -> autoTimer.get() >= forwardDuration.get(() -> true))
+            .beforeStarting(
+                () -> {
+                  autoTimer.restart();
+                  autoTimer.start();
+                });
+    return pushBack.andThen(goForwards);
   }
 }

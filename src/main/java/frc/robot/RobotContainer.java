@@ -74,6 +74,7 @@ public class RobotContainer {
     autoChooser = new LoggedShuffleboardChooser<>("Auto Choices", "Driver");
     autoChooser.addDefaultOption("nothing", Commands.none());
     autoChooser.addOption("DriveForSetTime", drive.auto());
+    autoChooser.addOption("With Cube", drive.autoWithCube());
 
     // Configure the button bindings
     configureButtonBindings();
