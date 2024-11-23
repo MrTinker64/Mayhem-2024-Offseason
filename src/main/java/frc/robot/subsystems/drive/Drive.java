@@ -102,7 +102,9 @@ public class Drive extends SubsystemBase {
     return run(() -> {
           double xSpeed = MathUtil.applyDeadband(xInput.get(), DEADBAND);
           double omegaRotation = MathUtil.applyDeadband(omegaRotationInput.get(), DEADBAND);
-          io.arcadeDrive(xSpeed, omegaRotation);
+          io.arcadeDrive(
+              Math.copySign(xSpeed * xSpeed, xSpeed),
+              Math.copySign(omegaRotation * omegaRotation, omegaRotation));
         })
         .withName("joystick drive");
   }
