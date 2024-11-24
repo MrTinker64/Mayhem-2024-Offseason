@@ -34,8 +34,8 @@ public class Drive extends SubsystemBase {
 
   private Timer autoTimer = new Timer();
   private LoggedShuffleboardNumber forwardDuration =
-      new LoggedShuffleboardNumber("forward", "Test", 2.85);
-  private LoggedShuffleboardNumber backDuration = new LoggedShuffleboardNumber("back", "Test", .55);
+      new LoggedShuffleboardNumber("forward", "Test", 2.8);
+  private LoggedShuffleboardNumber backDuration = new LoggedShuffleboardNumber("back", "Test", .7);
 
   public SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(DriveConstants.kS, DriveConstants.kV, DriveConstants.kA);
